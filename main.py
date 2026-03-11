@@ -9,6 +9,7 @@ class NeonLeet(ctk.CTk):
 
         current_row = 0
         current_column = 0
+        self.all_challenges = self.load_challenge()
 
         # Opens a blank window titled NeonLeet
         # in a 600x600 pixel size
@@ -19,7 +20,7 @@ class NeonLeet(ctk.CTk):
 
         self.mission_label = ctk.CTkLabel(
             self,
-            text="Mission: Two Sum",
+            text=f"{self.all_challenges['title']}",  #pulls title from challenges json file
             font=("Courier", 24, "bold"),
             text_color="#00FF00"
         )
@@ -31,6 +32,11 @@ class NeonLeet(ctk.CTk):
         self.geometry("600x600")
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
+
+        self.description_box = ctk.CTkTextbox(self, width=600, height=150)
+        self.description_box.grid(row=current_row, column=current_column, columnspan=2, sticky="nsew")
+        self.description_box.insert(0.0, self.all_challenges['description'])
+        current_row += 1
 
         self.hacking_terminal = ctk.CTkTextbox(self, width=600, height=150)
         self.run_button = ctk.CTkButton(self, text="Execute Payload",
@@ -66,6 +72,12 @@ class NeonLeet(ctk.CTk):
 
     def clear_terminal(self):
         self.hacking_terminal.delete("1.0", "end")
+
+    def load_challenge(self):
+        json_path = "data/challenges.json"
+        with open(f"{json_path}", "r") as f:
+            self.all_challenges = json.load(f)
+            return self.all_challenges
 
 
 if __name__ == "__main__":
