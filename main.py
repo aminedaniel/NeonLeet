@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import io
 from contextlib import redirect_stdout
+import json
 
 class NeonLeet(ctk.CTk):
     def __init__(self):
